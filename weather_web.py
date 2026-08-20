@@ -67,14 +67,14 @@ with left_col:
     st.subheader("🌤️ Minneapolis Weather")
 
    # Hides the API key using Streamlit's built-in secrets manager
-# Temporary debug check
-if "OPENWEATHER_API_KEY" not in st.secrets:
-    st.error("⚠️ Streamlit cannot find 'OPENWEATHER_API_KEY' in your Secrets dashboard!")
-    st.write("Available secrets:", list(st.secrets.keys())) # Lists keys safely without showing your actual API key
-    st.stop()
-else:
-    API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
+import os
+
+API_KEY = st.secrets.get("OPENWEATHER_API_KEY") or os.environ.get("OPENWEATHER_API_KEY")
+
+if not API_KEY:
+    st.error("⚠️ Weather API Key is missing! Please configure it in your secrets.")
+    st.stop()
 
     LAT = 44.9778
     LON = -93.2650
