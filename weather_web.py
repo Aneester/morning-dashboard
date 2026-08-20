@@ -18,7 +18,7 @@ with st.sidebar:
         "Nasdaq": "^IXIC",
         "Apple": "AAPL",
         "Microsoft": "MSFT",
-        "Google": "GOOGL"
+        "Google": "GOOGL",
         "Nvidia": "NVDA"
     }
     
