@@ -69,8 +69,7 @@ with left_col:
 
    # Hides the API key using Streamlit's built-in secrets manager
 
-API_KEY = st.secrets.get("OPENWEATHER_API_KEY") or os.environ.get("OPENWEATHER_API_KEY")
-
+API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 if not API_KEY:
     st.error("⚠️ Weather API Key is missing! Please configure it in your secrets.")
     st.stop()
