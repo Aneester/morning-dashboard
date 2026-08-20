@@ -66,7 +66,15 @@ with left_col:
     # --- WEATHER SECTION ---
     st.subheader("🌤️ Minneapolis Weather")
 
-    API_KEY = "89f943e8ec04fc74f80fb2ce62c7dca6"
+   # Hides the API key using Streamlit's built-in secrets manager
+import os
+
+API_KEY = st.secrets.get("OPENWEATHER_API_KEY") or os.environ.get("OPENWEATHER_API_KEY")
+
+if not API_KEY:
+    st.error("⚠️ Weather API Key is missing! Please configure it in your secrets.")
+    st.stop()
+
     LAT = 44.9778
     LON = -93.2650
 
