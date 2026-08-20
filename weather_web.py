@@ -19,6 +19,7 @@ with st.sidebar:
         "Apple": "AAPL",
         "Microsoft": "MSFT",
         "Google": "GOOGL"
+        "Nvidia": "NVDA"
     }
     
     for display_name, symbol in tickers_to_track.items():
