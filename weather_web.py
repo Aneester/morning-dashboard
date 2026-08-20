@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import xml.etree.ElementTree as ET
 import yfinance as yf # New library for free stock data
+import os
 
 # 1. Page Config
 st.set_page_config(page_title="My Morning Command Center", page_icon="☀️", layout="wide")
@@ -67,8 +68,6 @@ with left_col:
     st.subheader("🌤️ Minneapolis Weather")
 
    # Hides the API key using Streamlit's built-in secrets manager
-
-import os
 
 API_KEY = st.secrets.get("OPENWEATHER_API_KEY") or os.environ.get("OPENWEATHER_API_KEY")
 
