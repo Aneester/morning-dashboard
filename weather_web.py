@@ -67,11 +67,6 @@ with left_col:
     # --- WEATHER SECTION ---
     st.subheader("🌤️ Minneapolis Weather")
     
-# Temporary debug check
-if "OPENWEATHER_API_KEY" not in st.secrets:
-    st.error("⚠️ Streamlit cannot find 'OPENWEATHER_API_KEY' in your Secrets dashboard!")
-    st.stop()
-else:
     API_KEY = st.secrets["OPENWEATHER_API_KEY"]
 
     LAT = 44.9778
