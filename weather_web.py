@@ -4,10 +4,19 @@ import xml.etree.ElementTree as ET
 import yfinance as yf # New library for free stock data
 import os
 from datetime import datetime
-from zoneinfo import ZoneInfo # Built-in libraries for timezones
+from zoneinfo import ZoneInfo # Standard library to handle timezones accurately
 
 # 1. Page Config
 st.set_page_config(page_title="My Morning Command Center", page_icon="☀️", layout="wide")
+
+# --- TIME & DATE CALCULATION ---
+# Lock timezone to Central Time (Minneapolis local time)
+tz = ZoneInfo("America/Chicago")
+now = datetime.now(tz)
+
+current_day = now.strftime("%A")          # e.g., Thursday
+current_date = now.strftime("%B %d, %Y")  # e.g., August 20, 2026
+current_time = now.strftime("%I:%M %p")   # e.g., 07:30 AM
 
 # --- SIDEBAR: STOCK TICKERS ---
 with st.sidebar:
@@ -59,15 +68,7 @@ with st.sidebar:
 
 # --- MAIN PAGE ---
 st.title("☀️ My Morning Command Center")
-
-# Get current time in Minneapolis (Central Time)
-tz = ZoneInfo("America/Chicago")
-now = datetime.now(tz)
-current_day = now.strftime("%A")          # e.g., Thursday
-current_date = now.strftime("%B %d, %Y")  # e.g., August 20, 2026
-current_time = now.strftime("%I:%M %p")   # e.g., 07:30 AM
-
-# Display Date and Time
+# Visual Date and Time indicator right at the top
 st.markdown(f"### 🗓️ {current_day}, {current_date} &nbsp; | &nbsp; ⏰ {current_time} (CT)")
 st.write("Start your day with weather, markets, and the latest headlines.")
 st.divider()
@@ -83,7 +84,6 @@ with left_col:
     LAT = 44.9778
     LON = -93.2650
     weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={API_KEY}&units=imperial"
-    
     try:
         response = requests.get(weather_url)
         response.raise_for_status()
@@ -101,4 +101,29 @@ with left_col:
             st.metric(label="Feels Like", value=f"{feels_like} °F")
         with col2:
             st.metric(label="Humidity", value=f"{humidity}%")
-            st
+            st.metric(label="Wind Speed", value=f"{wind_speed} mph")
+            
+        st.info(f"**Current Condition:** {description}")
+    except Exception as err:
+        st.error(f"Failed to fetch weather data: {err}")
+
+with right_col:
+    # --- NEWS SECTION ---
+    st.subheader("📰 Top 5 News Headlines")
+    rss_url = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
+    try:
+        news_response = requests.get(rss_url)
+        news_response.raise_for_status()
+        
+        root = ET.fromstring(news_response.content)
+        items = root.findall('./channel/item')[:5]
+        
+        for item in items:
+            title = item.find('title').text
+            link = item.find('link').text
+            
+            # Display clean clickable links
+            st.markdown(f"🔹 **[{title}]({link})**")
+            
+    except Exception as e:
+        st.error(f"Failed to fetch news headlines: {e}")
