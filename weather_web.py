@@ -7,7 +7,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo # Standard library to handle timezones accurately
 
 # 1. Page Config
-st.set_page_config(page_title="My Morning Command Center", page_icon="☀️", layout="wide")
+st.set_page_config(page_title="My Command Center", page_icon="☀️", layout="wide")
 
 # --- TIME & DATE CALCULATION ---
 # Lock timezone to Central Time (Minneapolis local time)
