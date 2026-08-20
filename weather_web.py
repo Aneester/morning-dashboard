@@ -70,7 +70,6 @@ with left_col:
 # Temporary debug check
 if "OPENWEATHER_API_KEY" not in st.secrets:
     st.error("⚠️ Streamlit cannot find 'OPENWEATHER_API_KEY' in your Secrets dashboard!")
-    st.write("Available secrets:", list(st.secrets.keys())) # Lists keys safely without showing your actual API key
     st.stop()
 else:
     API_KEY = st.secrets["OPENWEATHER_API_KEY"]
